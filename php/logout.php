@@ -1,8 +1,11 @@
 <?php
 session_start();
-if($_SESSION['username']){
+if(isset($_SESSION)){ 
+   
     session_unset();
-    session_destroy();
-    header('location:..forms/login.php');
+        session_destroy();
+        header('location:../forms/login.html');
+   
+   } ?>
 }
 ?>
