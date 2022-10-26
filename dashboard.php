@@ -25,17 +25,20 @@
   </div>
 </nav>
 <div class="container justify-content-center">
-     <h1 class="">
-       Welcome to Zuri Authentication 
-       <?php session_start();
-        if(isset($_SESSION)){ echo $_SESSION['username'];} ?>
-    </h1>
-
-     <form action="php/action.php" method="GET">
-        <button class="btn-primary" name="all">
-        Show All Users
-       </button>
-     </form>
+     
+      <?php
+      session_start();
+      if(isset($_SESSION['username'])){
+        echo "<h1>"."Welcome to Zuri Authentication ".$_SESSION['username']."</h1>";
+        echo   "<form action='php/action.php' method='GET'>".
+        "<button class='btn-primary' name='all'>".
+       " Show All Users".
+      " </button>".
+    " </form>"
+;
+      }
+       
+?>
     
 </div>
    

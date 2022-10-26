@@ -10,10 +10,10 @@ function db() {
     if(!$conn){
         echo "<script> alert('Error connecting to the database') </script>";
     }
-    else{
+    // else{
 
-        echo "connection was successful";
-    }
+    //     echo "connection was successful";
+    // }
     return $conn;
 
 }

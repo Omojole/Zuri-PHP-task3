@@ -14,9 +14,9 @@ $sql="INSERT INTO students(full_names,country,email,gender,`password`) VALUES ('
 
 if(mysqli_query($conn,$sql)){
     echo "<script> alert('User succesfully registered')</script>";
+    session_start();
+    $_SESSION['username']=$email;
     header("refresh:1; url=../dashboard.php");
-session_start();
-$_SESSION['username']=$email;
 }
 }
 }
@@ -78,11 +78,11 @@ function getusers(){
                 "</td> <td style='width: 150px'>" . $data['email'] .
                 "</td> <td style='width: 150px'>" . $data['gender'] . 
                 "</td> <td style='width: 150px'>" . $data['country'] . 
-                "</td>
-                <form action='action.php' method='post'>
+                "</td> <td style='width: 150px'> 
+                <form action='action.php' method='POST'>
                 <input type='hidden' name='id'" .
                  "value=" . $data['id'] . ">".
-                "<td style='width: 150px'> <button type='submit', name='delete'> DELETE </button>".
+               "<button type='submit', name='delete'> DELETE </button></form></td>".
                 "</tr>";
         }
         echo "</table></table></center></body></html>";
@@ -97,7 +97,7 @@ function getusers(){
         $sql="DELETE FROM students WHERE id='$id'";
         if(mysqli_query($conn,$sql)){
             echo "<script>alert('deleted sucessfully')</script><br>";
-           header('refresh:1;url=../dashboard.php');
+           header('refresh:1;url=action.php?all=');
         }
         else {
             echo "<script>alert('error')</script>";
