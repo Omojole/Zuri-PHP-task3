@@ -6,17 +6,17 @@ require_once "../config.php";
 function registerUser($fullnames, $email, $password, $gender, $country){
     $conn = db();
 if(mysqli_num_rows(mysqli_query($conn,"SELECT email from students WHERE email='$email'"))>=1){
-    header("location:../forms/login.html");
     echo "<script> alert('User already exists')</script>";
+    header("refresh:1;url=../forms/login.html");
 }
 else{
 $sql="INSERT INTO students(full_names,country,email,gender,`password`) VALUES ('$fullnames','$country','$email','$gender','$password')";
 
 if(mysqli_query($conn,$sql)){
-    header("location:../dashboard.php");
+    echo "<script> alert('User succesfully registered')</script>";
+    header("refresh:1; url=../dashboard.php");
 session_start();
 $_SESSION['username']=$email;
-    echo "<script> alert('User succesfully registered')</script>";
 }
 }
 }
@@ -34,15 +34,14 @@ $_SESSION['username']=$email;
 header('location:../dashboard.php');
     }
     else{
-        header ('location:../forms/login.html');
+        echo "<script>alert('Wrong email/Password')</script>";
+        header ('refresh:2;url=../forms/login.html');
     }
 }
 
 
 function resetPassword($email, $password){
-    //create a connection variable using the db function in config.php
     $conn = db();
-    //open connection to the database and check if username exist in the database
     $query=" SELECT email FROM students WHERE email='$email'";
     $result=mysqli_query($conn,$query);
     if(mysqli_num_rows($result)>=1){
@@ -51,13 +50,13 @@ function resetPassword($email, $password){
             echo 'Password changed sucessfully';
         }
         else{
-            echo 'an error occured,try again';
+                echo "<script>alert('an error occured,try again')</script>";
+            }
         }
-    }
-    else{
-        echo 'error occured';
-    };
-    //if it does, replace the password with $password given
+        else{
+            echo "<script>alert('User does not exist')</script>";
+            header('refresh:2;url=../forms/login.html');
+        };
 }
 
 function getusers(){
@@ -97,10 +96,11 @@ function getusers(){
      if(mysqli_num_rows(mysqli_query($conn,"SELECT * FROM students WHERE id=$id"))>=1){
         $sql="DELETE FROM students WHERE id='$id'";
         if(mysqli_query($conn,$sql)){
-            echo "deleted <br>";
-
+            echo "<script>alert('deleted sucessfully')</script><br>";
+           header('refresh:1;url=../dashboard.php');
+        }
+        else {
+            echo "<script>alert('error')</script>";
         }
      }
-     //delete user with the given id from the database
-
  }
